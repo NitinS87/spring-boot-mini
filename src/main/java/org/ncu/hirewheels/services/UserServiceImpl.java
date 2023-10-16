@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setEmail(email);
         user.setMobileNumber(mobileNo);
+        user.setWalletMoney(10000.00);
 
         Role userRole = roleRepository.findByRoleName("USER");
         System.out.println("userRole: " + userRole);
@@ -40,27 +41,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByCriteria(Long id, String email, String mobileNumber, String firstName, String lastName) {
+        if (id != null) {
+            return userRepository.findById(Math.toIntExact(id)).orElse(null);
+        } else if (email != null) {
+            return userRepository.findByEmail(email);
+        } else if (mobileNumber != null) {
+            return userRepository.findByMobileNumber(mobileNumber);
+        } else if (firstName != null && lastName != null) {
+            return userRepository.findByFirstNameAndLastName(firstName, lastName);
+        } else if (firstName != null) {
+            return userRepository.findByFirstName(firstName);
+        }
+        // Add more criteria as needed
+        return null;
+    }
+
+    @Override
     public User getUser(String email) {
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public User getUser(int id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public User getUserByMobileNumber(String mobileNumber) {
-        return userRepository.findByMobileNumber(mobileNumber);
-    }
-
-    @Override
-    public User getUserByFirstNameAndLastName(String firstName, String lastName) {
-        return userRepository.findByFirstNameAndLastName(firstName, lastName);
-    }
-
-    @Override
-    public User getUserByFirstName(String firstName) {
-        return userRepository.findByFirstName(firstName);
-    }
 }

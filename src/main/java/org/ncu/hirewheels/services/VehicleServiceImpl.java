@@ -36,6 +36,7 @@ public class VehicleServiceImpl implements VehicleService {
 
         return vehicle;
     }
+
     //update a vehicle
     @Override
     public Vehicle updateVehicle(int id, int availabilityStatus) {
@@ -59,7 +60,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle getVehicle(int id){
+    public Vehicle getVehicle(int id) {
         return vehicleRepository.findById(id).orElse(null);
     }
 }

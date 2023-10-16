@@ -16,7 +16,7 @@ public interface BookingService {
     public boolean cancelBooking(int bookingId);
 
     //change booking
-    public boolean changeBooking(int bookingId, String pickupDate, String dropoffDate);
+    public Booking changeBooking(int bookingId, String pickupDate, String dropoffDate);
 
     //view all booking
     public List<Booking> viewAllBooking();

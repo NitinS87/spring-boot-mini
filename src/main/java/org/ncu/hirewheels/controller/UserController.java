@@ -41,64 +41,17 @@ public class UserController {
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
-    //get user by email
-    @GetMapping(value = "/users/{email}")
-    public ResponseEntity<User> getUser(@PathVariable("email") String email) {
-        User user = userService.getUser(email);
+    @GetMapping("/search")
+    public ResponseEntity<User> getUser(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String mobileNumber,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        User user = userService.getUserByCriteria(id, email, mobileNumber, firstName, lastName);
         if (user == null) {
             return ResponseEntity.noContent().build();
         }
-
-        System.out.println("user: " + user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-    //get user by id
-    @GetMapping(value = "/users/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") int id) {
-        User user = userService.getUser(id);
-        if (user == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        System.out.println("user: " + user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    //get user by mobile number
-    @GetMapping(value = "/users/{mobileNumber}")
-    public ResponseEntity<User> getUserByMobileNumber(@PathVariable("mobileNumber") String mobileNumber) {
-        User user = userService.getUserByMobileNumber(mobileNumber);
-        if (user == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        System.out.println("user: " + user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    //get user by first name and last name
-    @GetMapping(value = "/users/{firstName}/{lastName}")
-    public ResponseEntity<User> getUserByFirstNameAndLastName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
-        User user = userService.getUserByFirstNameAndLastName(firstName, lastName);
-        if (user == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        System.out.println("user: " + user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    //get user by first name
-    @GetMapping(value = "/users/{firstName}")
-    public ResponseEntity<User> getUserByFirstName(@PathVariable("firstName") String firstName) {
-        User user = userService.getUserByFirstName(firstName);
-        if (user == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        System.out.println("user: " + user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
 }
